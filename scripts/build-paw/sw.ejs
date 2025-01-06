@@ -1,0 +1,125 @@
+// 缓存版本号 - 每次发布时更新此版本号
+const CACHE_VERSION = 'v1.0.0';
+const CACHE_NAME = `app-static-${CACHE_VERSION}`;
+const CACHE_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒数
+
+const STATIC_ASSETS = [<%= cacheList %>];
+
+// 安装事件 - 预缓存静态资源
+self.addEventListener('install', event => {
+  event.waitUntil(
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+
+      // 分批缓存文件，避免一次性缓存太多导致超时
+      const batchSize = 50;
+      for (let i = 0; i < STATIC_ASSETS.length; i += batchSize) {
+        const batch = STATIC_ASSETS.slice(i, i + batchSize);
+        await Promise.all(
+          batch.map(async url => {
+            try {
+              const response = await fetch(url, { credentials: 'same-origin' });
+              if (response.ok) {
+                await cache.put(url, response);
+              }
+            } catch (error) {
+              console.error(`Failed to cache: ${url}`, error);
+            }
+          })
+        );
+      }
+    })()
+  );
+});
+
+// 激活事件 - 清理旧版本缓存
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    (async () => {
+      const cacheNames = await caches.keys();
+      await Promise.all(
+        cacheNames
+          .filter(name => name !== CACHE_NAME)
+          .map(name => caches.delete(name))
+      );
+
+      // 立即接管所有页面
+      await clients.claim();
+    })()
+  );
+});
+
+// 判断是否是静态资源
+function isStaticAsset(url) {
+  return (
+    STATIC_ASSETS.includes(url) ||
+    url.includes('.next/static/') ||
+    url.endsWith('.js') ||
+    url.endsWith('.css') ||
+    url.endsWith('.jpg') ||
+    url.endsWith('.png') ||
+    url.endsWith('.svg')
+  );
+}
+
+// 检查缓存是否过期
+async function isCacheExpired(response) {
+  if (!response) return true;
+
+  const dateHeader = response.headers.get('date');
+  if (!dateHeader) return false;
+
+  const cachedTime = new Date(dateHeader).getTime();
+  const now = new Date().getTime();
+
+  return now - cachedTime > CACHE_EXPIRATION;
+}
+
+// 网络请求处理
+self.addEventListener('fetch', event => {
+  const url = event.request.url;
+
+  if (!(url.startsWith('http://') || url.startsWith('https://'))) {
+    return;
+  }
+
+  event.respondWith(
+    (async () => {
+      try {
+        // 对于静态资源，采用缓存优先策略
+        if (isStaticAsset(url)) {
+          const cacheResponse = await caches.match(event.request);
+
+          // 检查缓存是否过期
+          const isExpired = await isCacheExpired(cacheResponse);
+
+          if (cacheResponse) {
+            if (isExpired) {
+              // 返回缓存的响应，同时在后台更新缓存
+              event.waitUntil(
+                (async () => {
+                  try {
+                    const cache = await caches.open(CACHE_NAME);
+                    const networkResponse = await fetch(event.request);
+                    await cache.put(event.request, networkResponse.clone());
+                  } catch (error) {
+                    console.error('Background cache update failed:', error);
+                  }
+                })()
+              );
+            }
+            return cacheResponse;
+          }
+        }
+
+        // 其他请求采用网络优先策略
+        const networkResponse = await fetch(event.request);
+        return networkResponse;
+      } catch (error) {
+        // 所有策略失败时的处理
+        console.error('Request failed:', error);
+        throw error;
+      }
+    })()
+  );
+});
