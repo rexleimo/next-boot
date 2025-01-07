@@ -7,6 +7,11 @@ import ejs from 'ejs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const __rootname = process.cwd();
 
+function generateBuildHash() {
+  const buildId = readFileSync(join(__rootname, '.next/BUILD_ID'), 'utf-8');
+  return buildId.trim();
+}
+
 // 递归遍历目录的函数
 async function traverseDir(dir) {
   const files = [];
@@ -25,7 +30,7 @@ async function traverseDir(dir) {
     } else {
       // 如果是文件,添加到结果数组
       files.push(
-        `${fullPath.replace(__rootname, '').replace('/.next', '/next')}`
+        `${fullPath.replace(__rootname, '').replace('/.next', '/_next')}`
       );
     }
   }
@@ -40,7 +45,10 @@ async function traverseDir(dir) {
   const templatePath = join(__dirname, 'sw.ejs');
   const template = readFileSync(templatePath, 'utf-8');
 
-  const renderedSw = ejs.render(template, { cacheList: allFiles });
+  const renderedSw = ejs.render(template, {
+    cacheList: JSON.stringify(['/', ...allFiles], null, 2),
+    buildId: generateBuildHash(),
+  });
 
   // 写入生成的 Service Worker 文件
   const outputPath = join(__rootname, 'public', `sw.js`);
