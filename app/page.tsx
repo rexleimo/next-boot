@@ -1,8 +1,8 @@
 import { CustomImage } from '@/components/CustomImage';
-import PageProps from '@/types/PageProps';
+import { Button } from '@/components/Button';
 
-export default function Home({ params, searchParams }: PageProps) {
-  console.log(params, searchParams);
+export default function Home() {
+
   return (
     <div>
       <CustomImage src={'/2.png'} alt={'2.png'} width={500} height={500} />
@@ -15,6 +15,7 @@ export default function Home({ params, searchParams }: PageProps) {
         width={500}
         height={500}
       />
+      <Button />
     </div>
   );
 }
