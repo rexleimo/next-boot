@@ -4,6 +4,8 @@ import { ThemeProvider } from '@/components';
 import Script from 'next/script';
 import Head from 'next/head';
 
+import '@/app/styles/themes/_theme.scss';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -21,7 +23,7 @@ export const viewport: Viewport = {
   minimumScale: 1,
   userScalable: false,
   viewportFit: 'cover',
-}
+};
 
 export const metadata: Metadata = {
   title: 'Create Next App',

@@ -1,0 +1,8 @@
+// 生成CSS变量名
+@function css-var($name, $fallback: null) {
+  @if $fallback {
+    @return var(--#{$name}, $fallback);
+  } @else {
+    @return var(--#{$name});
+  }
+}
