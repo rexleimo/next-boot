@@ -1,13 +1,20 @@
-import { InstallPWA } from '@/components/InstallPWA';
+import { CustomImage } from '@/components/CustomImage';
+import PageProps from '@/types/PageProps';
 
-export default function Home() {
+export default function Home({ params, searchParams }: PageProps) {
+  console.log(params, searchParams);
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
+    <div>
+      <CustomImage src={'/2.png'} alt={'2.png'} width={500} height={500} />
+      <CustomImage
+        src={
+          '/rexleimo/rex-imgs/refs/heads/wx/2025/01/03/1735918495196-7f7be66a-5ae8-4897-b27b-0e58a4c2a32c.png'
+        }
+        alt={''}
+        remote={'https://raw.githubusercontent.com'}
+        width={500}
+        height={500}
+      />
     </div>
   );
 }
