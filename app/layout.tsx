@@ -4,7 +4,7 @@ import { ThemeProvider } from '@/components';
 import Script from 'next/script';
 import Head from 'next/head';
 
-import './styles/main.scss';
+import '@/styles/main.scss';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

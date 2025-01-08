@@ -1,7 +1,11 @@
 import { CustomImage } from '@/components/CustomImage';
 import { Button } from '@/components/Button';
+import { use } from 'react';
+import { apiClient } from '@/packages';
 
 export default function Home() {
+  const response = use(apiClient.store.getInventory().then(res => res.json()));
+  console.log(response);
 
   return (
     <div>
