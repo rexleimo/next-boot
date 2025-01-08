@@ -1,5 +1,6 @@
 import { ApiClient } from './ApiClient';
+import { Api } from '@/apis/Api';
 
 const apiClient = ApiClient();
-
-export { apiClient };
+const apiReq = new Api();
+export { apiClient, apiReq };

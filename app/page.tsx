@@ -1,10 +1,10 @@
 import { CustomImage } from '@/components/CustomImage';
 import { Button } from '@/components/Button';
 import { use } from 'react';
-import { apiClient } from '@/packages';
+import { apiClient, apiReq } from '@/packages';
 
 export default function Home() {
-  const response = use(apiClient.store.getInventory().then(res => res.json()));
+  const response = use(apiClient(apiReq.store.getInventory()));
   console.log(response);
 
   return (
