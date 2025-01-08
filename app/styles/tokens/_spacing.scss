@@ -1,0 +1,13 @@
+/* tokens/spacing.css */
+:root {
+  /* 间距比例 */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-4: 1rem;
+  --spacing-8: 2rem;
+
+  /* 语义化间距 */
+  --spacing-component: var(--spacing-4);
+  --spacing-layout: var(--spacing-8);
+}

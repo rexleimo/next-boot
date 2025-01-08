@@ -1,0 +1,14 @@
+/* tokens/colors.css */
+:root {
+  /* 基础色板 */
+  --color-blue-50: #eff6ff;
+  --color-blue-500: #3b82f6;
+  --color-blue-900: #1e3a8a;
+
+  /* 语义化颜色 */
+  --color-primary: var(--color-blue-500);
+  --color-secondary: #64748b;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}

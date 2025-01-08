@@ -1,0 +1,14 @@
+/* themes/dark.css */
+[data-theme="dark"] {
+  /* 深色主题变量覆盖 */
+  --bg-primary: var(--color-blue-900);
+  --bg-secondary: #1a1a1a;
+  --text-primary: white;
+  --text-secondary: var(--color-blue-50);
+
+  /* 组件特定变量 */
+  --button-bg: var(--color-blue-500);
+  --button-text: white;
+  --card-bg: var(--bg-secondary);
+  --card-border: var(--color-blue-500);
+}

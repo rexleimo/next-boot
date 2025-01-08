@@ -1,0 +1,19 @@
+/* tokens/typography.css */
+:root {
+  /* 字体系列 */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-serif: ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* 字体大小 */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
+  /* 行高 */
+  --leading-none: 1;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+}

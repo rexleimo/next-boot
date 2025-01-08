@@ -1,0 +1,14 @@
+/* themes/light.css */
+[data-theme="light"] {
+  /* 使用基础令牌定义主题变量 */
+  --bg-primary: var(--color-blue-50);
+  --bg-secondary: white;
+  --text-primary: var(--color-blue-900);
+  --text-secondary: var(--color-blue-500);
+
+  /* 组件特定变量 */
+  --button-bg: var(--color-primary);
+  --button-text: white;
+  --card-bg: var(--bg-secondary);
+  --card-border: var(--color-blue-50);
+}
