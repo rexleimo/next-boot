@@ -2,7 +2,7 @@ if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
       const registration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/_next/',
+        // scope: '/',
       });
 
       if (registration) {

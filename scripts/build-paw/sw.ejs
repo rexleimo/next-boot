@@ -1,7 +1,6 @@
 // 缓存版本号 - 每次发布时更新此版本号
 const CACHE_VERSION = '<%= buildId %>';
 const CACHE_NAME = `app-static-${CACHE_VERSION}`;
-const CACHE_EXPIRATION = 7 * 24 * 60 * 60 * 1000; // 7天的毫秒数
 
 const STATIC_ASSETS = <%- cacheList %>;
 
@@ -33,78 +32,43 @@ self.addEventListener('activate', event => {
 
 // 判断是否是静态资源
 function isStaticAsset(url) {
-  return (
-    STATIC_ASSETS.includes(url) ||
-    url.includes('.next/static/') ||
-    url.endsWith('.js') ||
-    url.endsWith('.css') ||
-    url.endsWith('.jpg') ||
-    url.endsWith('.png') ||
-    url.endsWith('.svg')
+  return url.match(
+    /\.(css|js|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|avif|webp)(\?.*)?$/
   );
-}
-
-// 检查缓存是否过期
-async function isCacheExpired(response) {
-  if (!response) return true;
-
-  const dateHeader = response.headers.get('date');
-  console.log(dateHeader);
-  if (!dateHeader) return false;
-
-  const cachedTime = new Date(dateHeader).getTime();
-  const now = new Date().getTime();
-
-  return now - cachedTime > CACHE_EXPIRATION;
 }
 
 // 网络请求处理
 self.addEventListener('fetch', event => {
   const url = event.request.url;
-
+  console.log('fetch url', url);
   if (!(url.startsWith('http://') || url.startsWith('https://'))) {
     return;
   }
 
-  event.respondWith(
-    (async () => {
-      try {
-        // 对于静态资源，采用缓存优先策略
-        if (isStaticAsset(url)) {
-          const cacheResponse = await caches.match(event.request);
-
-          // 检查缓存是否过期
-          const isExpired = await isCacheExpired(cacheResponse);
-
-          if (cacheResponse) {
-            if (isExpired) {
-              // 返回缓存的响应，同时在后台更新缓存
-              event.waitUntil(
-                (async () => {
-                  try {
-                    const cache = await caches.open(CACHE_NAME);
-                    const networkResponse = await fetch(event.request);
-                    await cache.put(event.request, networkResponse.clone());
-                  } catch (error) {
-                    console.error('Background cache update failed:', error);
-                  }
-                })()
-              );
-            }
-            return cacheResponse;
-          }
+  if (isStaticAsset(url)) {
+    event.respondWith(¬
+      caches.match(event.request).then(cacheResponse => {
+        if (cacheResponse) {
+          return cacheResponse;
         }
 
-        // 其他请求采用网络优先策略
-        const networkResponse = await fetch(event.request);
-        return networkResponse;
-      } catch (error) {
-        // 所有策略失败时的处理
-        console.error('Request failed:', error);
-        throw error;
-      }
-    })()
-  );
+        return fetch(event.request).then(fetchResponse => {
+          if (!fetchResponse.ok) {
+            // 如果请求失败，直接返回失败的响应
+            return fetchResponse;
+          }
+
+          const responseClone = fetchResponse.clone();
+          caches
+            .open(CACHE_NAME)
+            .then(cache =>
+              console.debug('aaa', cache.put(event.request.url, responseClone))
+            );
+          return fetchResponse;
+        });
+      })
+    );
+  }
 });
 
 // 添加消息处理，让页面可以控制更新时机

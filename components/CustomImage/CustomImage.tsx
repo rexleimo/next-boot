@@ -12,7 +12,7 @@ function CustomImage(props: CustomImageProps) {
   const imageLoader = useCallback(
     ({ src, width, quality }: any) => {
       if (!remote) {
-        return `${src}?w=${width}&q=${quality || 75}`;
+        return `/_next/image?url=${src}&w=${width}&q=${quality || 75}`;
       }
       return `${remote}/${src}?w=${width}&q=${quality || 75}`;
     },
