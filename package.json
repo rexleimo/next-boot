@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node ./scripts/build-paw/index.mjs",
+    "build": "ANALYZE=true next build && node ./scripts/build-paw/index.mjs",
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.1.4",
     "@types/ejs": "^3",
     "@types/next-pwa": "^5",
     "@types/node": "^20",
