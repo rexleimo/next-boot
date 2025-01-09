@@ -1,3 +1,14 @@
+import { headers } from 'next/headers';
+
+async function getAuthToken() {
+  if (typeof window !== 'undefined') {
+    return window.localStorage.getItem('token');
+  } else {
+    const headersList = await headers();
+    return headersList.get('Authorization');
+  }
+}
+
 // 创建API包装函数
 async function withAPI<T>(promise: Promise<Response>): Promise<T> {
   try {
@@ -23,9 +34,9 @@ async function withAPI<T>(promise: Promise<Response>): Promise<T> {
 }
 
 // 添加认证的包装函数
-function withAuth<T>(promise: Promise<Response>): Promise<T> {
+async function withAuth<T>(promise: Promise<Response>): Promise<T> {
   // 获取token
-  const token = '';
+  const token = await getAuthToken();
 
   // 添加认证头
   const headers = new Headers({
