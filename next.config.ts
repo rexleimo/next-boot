@@ -6,7 +6,17 @@ const nextConfig: NextConfig = {
   /* config options here */
   // output: 'standalone',
 
-  compress: true,
+  compress: false,
+  // 高速CDN缓存时间
+  expireTime: imageCacheTimeOut,
+
+  httpAgentOptions: {
+    keepAlive: false,
+  },
+
+  onDemandEntries: {
+    pagesBufferLength: 5,
+  },
 
   images: {
     minimumCacheTTL: imageCacheTimeOut,
