@@ -1,8 +1,10 @@
 import type { NextConfig } from 'next';
-
 import withBundleAnalyzer from '@next/bundle-analyzer';
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const imageCacheTimeOut = 60 * 60 * 24 * 7;
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -37,4 +39,4 @@ const nextConfig: NextConfig = {
 
 export default withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
-})(nextConfig);
+})(withNextIntl(nextConfig));

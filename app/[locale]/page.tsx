@@ -1,11 +1,13 @@
 import { CustomImage } from '@/components/CustomImage';
-import { Button } from '@/components/Button';
 import { use } from 'react';
 import { apiClient, apiReq } from '@/packages';
+import { useTranslations } from 'next-intl';
 
 export default function Home() {
   const response = use(apiClient(apiReq.store.getInventory()));
   console.log(response);
+
+  const t = useTranslations('HomePage');
 
   return (
     <div>
@@ -19,7 +21,7 @@ export default function Home() {
       {/*  width={64}*/}
       {/*  height={64}*/}
       {/*/>*/}
-      <Button />
+      {t('title')}
     </div>
   );
 }
