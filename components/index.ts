@@ -1,2 +1,2 @@
 export * from './ContactUs';
-export * from './ThemeProvider';
+export * from './StorageProvider';

@@ -37,35 +37,35 @@ function isStaticAsset(url) {
   );
 }
 
+// 移除查询参数
+function normalizeURL(url) {
+  const urlObj = new URL(url);
+  // 移除查询参数
+  urlObj.search = '';
+  return urlObj.toString();
+}
+
 // 网络请求处理
 self.addEventListener('fetch', event => {
   const url = event.request.url;
-  console.log('fetch url', url);
-  if (!(url.startsWith('http://') || url.startsWith('https://'))) {
-    return;
-  }
 
   if (isStaticAsset(url)) {
-    event.respondWith(¬
-      caches.match(event.request).then(cacheResponse => {
+    event.respondWith(
+      caches.match(event.request).then(async cacheResponse => {
         if (cacheResponse) {
           return cacheResponse;
         }
 
-        return fetch(event.request).then(fetchResponse => {
-          if (!fetchResponse.ok) {
-            // 如果请求失败，直接返回失败的响应
-            return fetchResponse;
-          }
-
-          const responseClone = fetchResponse.clone();
-          caches
-            .open(CACHE_NAME)
-            .then(cache =>
-              console.debug('aaa', cache.put(event.request.url, responseClone))
-            );
+        const fetchResponse = await fetch(event.request);
+        if (!fetchResponse.ok) {
           return fetchResponse;
-        });
+        }
+
+        const cache = await caches.open(CACHE_NAME);
+        const cacheKey = normalizeURL(event.request.url);
+        await cache.put(cacheKey, fetchResponse.clone());
+
+        return fetchResponse;
       })
     );
   }

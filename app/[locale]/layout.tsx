@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { ThemeProvider } from '@/components';
+import { StorageProvider } from '@/components';
 import Script from 'next/script';
 import Head from 'next/head';
 
@@ -43,14 +43,18 @@ export const metadata: Metadata = {
   },
 };
 
+type Params = Promise<{ locale: string }>;
+
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: Params;
 }>) {
   // Ensure that the incoming `locale` is valid
+
+  const { locale } = await params;
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
@@ -65,10 +69,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>{children}</ThemeProvider>
-        </NextIntlClientProvider>
-        <Script src={'/register-sw.js'} />
+        <StorageProvider>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </StorageProvider>
+        {process.env.NODE_ENV === 'production' && (
+          <Script src={'/register-sw.js'} />
+        )}
       </body>
     </html>
   );
