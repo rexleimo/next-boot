@@ -4,7 +4,11 @@ import { useEffect } from 'react';
 
 function Button() {
   useEffect(() => {}, []);
-  return <div></div>;
+  return (
+    <div>
+      <button>ok</button>
+    </div>
+  );
 }
 
 export default Button;
