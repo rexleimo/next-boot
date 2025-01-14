@@ -12,7 +12,8 @@
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "api:build": "node swagger-config.mjs",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "postinstall": "yarn api:build"
   },
   "dependencies": {
     "@capacitor/cli": "^6.2.0",
