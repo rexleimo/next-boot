@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import '@/styles/main.scss';
+import React from 'react';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

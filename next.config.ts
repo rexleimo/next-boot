@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
   onDemandEntries: {
     pagesBufferLength: 5,
   },
+  reactStrictMode: false,
 
   images: {
     minimumCacheTTL: imageCacheTimeOut,
