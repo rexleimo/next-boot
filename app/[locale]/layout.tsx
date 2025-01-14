@@ -44,6 +44,12 @@ export const metadata: Metadata = {
   },
 };
 
+export async function generateStaticParams() {
+  return [{ locale: 'en' }];
+}
+
+export const dynamic = 'force-static';
+
 type Params = Promise<{ locale: string }>;
 
 export default async function RootLayout({

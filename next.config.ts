@@ -8,7 +8,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   /* config options here */
-  // output: 'standalone',
+  output: 'export',
 
   compress: false,
   // 高速CDN缓存时间

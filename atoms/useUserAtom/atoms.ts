@@ -1,6 +1,4 @@
-import { atomWithStorage } from 'jotai/utils';
+'use client';
+import { atom } from 'jotai';
 
-export const usernameAtom = atomWithStorage('username', {
-  name: 'John Doe',
-  age: 30,
-});
+export const usernameAtom = atom({});
