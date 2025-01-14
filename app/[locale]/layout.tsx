@@ -9,8 +9,11 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
-import '@/styles/main.scss';
 import React from 'react';
+import { Layout } from '@/components/Layout';
+
+import '@/styles/main.scss';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,7 +31,7 @@ export const viewport: Viewport = {
   maximumScale: 1,
   minimumScale: 1,
   userScalable: false,
-  viewportFit: 'cover',
+  viewportFit: 'cover', // 适配刘海屏
 };
 
 export const metadata: Metadata = {
@@ -69,16 +72,16 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
+    <html className={'min-h-screen'} lang={locale}>
       <Head>
         <meta name="theme-color" content="#000000" />
       </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
         <StorageProvider>
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <Layout>{children}</Layout>
           </NextIntlClientProvider>
         </StorageProvider>
         {process.env.NODE_ENV === 'production' && (
