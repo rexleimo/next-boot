@@ -1,6 +1,8 @@
+import React from 'react';
+
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import { StorageProvider } from '@/components';
+import { StorageProvider, Layout } from '@/components';
 import Script from 'next/script';
 import Head from 'next/head';
 
@@ -8,9 +10,6 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-
-import React from 'react';
-import { Layout } from '@/components/Layout';
 
 import '@/styles/main.scss';
 import './globals.css';
