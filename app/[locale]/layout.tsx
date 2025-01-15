@@ -4,7 +4,6 @@ import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { StorageProvider, Layout } from '@/components';
 import Script from 'next/script';
-import Head from 'next/head';
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -72,9 +71,10 @@ export default async function RootLayout({
 
   return (
     <html className={'min-h-screen'} lang={locale}>
-      <Head>
+      <head>
         <meta name="theme-color" content="#000000" />
-      </Head>
+        <link rel={'stylesheet'} href={'/iconfont/iconfont.css'} />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >
