@@ -10,13 +10,18 @@ console.log('__dirname', __dirname);
 
 const srcDir = resolve(__rootname, 'webfonts');
 
-function scanFiles(srcDir) {
+function scanFiles(srcDir, excludes = ['.git']) {
   const files = [];
 
   try {
     const items = readdirSync(srcDir);
 
     for (const item of items) {
+      // 检查是否在排除列表中
+      if (excludes.includes(item)) {
+        continue; // 跳过这个目录/文件
+      }
+
       const stat = statSync(resolve(srcDir, item));
       if (stat.isDirectory()) {
         files.push(...scanFiles(resolve(srcDir, item)));
@@ -32,6 +37,7 @@ function scanFiles(srcDir) {
 }
 
 function generateFonts(files) {
+
   webfontsGenerator(
     {
       files: files,
