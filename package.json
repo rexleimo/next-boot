@@ -11,9 +11,10 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "api:build": "node swagger-config.mjs",
+    "webfonts:build": "node ./scripts/webfonts/index.mjs",
     "test": "jest",
     "test:watch": "jest --watch",
-    "postinstall": "yarn api:build"
+    "postinstall": "yarn api:build && webfonts:build"
   },
   "dependencies": {
     "@capacitor/cli": "^6.2.0",
