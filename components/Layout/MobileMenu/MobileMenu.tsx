@@ -8,8 +8,9 @@ function MobileMenu(props: MobileMenuProps) {
   return (
     <div
       className={clsx(
-        'absolute w-full bottom-0 h-12 bg-amber-600',
+        'fixed w-full bottom-0 h-12 bg-amber-600',
         'sm:block md:block lg:hidden',
+        'z-[var(--z-footer)]',
         className
       )}
       {...restProps}
