@@ -5,7 +5,9 @@ type HeaderProps = HTMLAttributes<HTMLDivElement>;
 
 function Header({ children, className }: HeaderProps) {
   return (
-    <header className={clsx('sticky top-0 pt-safe', className)}>
+    <header
+      className={clsx('sticky top-0 pt-safe z-[var(--z-header)]', className)}
+    >
       {children}
     </header>
   );

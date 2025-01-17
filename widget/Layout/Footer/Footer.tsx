@@ -9,7 +9,7 @@ interface FooterProps {
 function Footer(props: FooterProps) {
   const { className, children } = props;
   
-  return <footer className={clsx('pb-safe', className)}>{children}</footer>;
+  return <footer className={clsx('pb-safe z-[var(--z-footer)', className)}>{children}</footer>;
 }
 
 export default memo(Footer);
