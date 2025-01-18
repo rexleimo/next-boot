@@ -26,6 +26,7 @@
     "@vusion/webfonts-generator": "^0.8.0",
     "clsx": "^2.1.1",
     "ejs": "^3.1.10",
+    "framer-motion": "^11.18.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jotai": "^2.11.0",
@@ -36,6 +37,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sass": "^1.83.1",
+    "swiper": "^11.2.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
