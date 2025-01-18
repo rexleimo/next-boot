@@ -7,7 +7,8 @@ function AsideNav() {
   return (
     <aside
       className={clsx(
-        'fixed top-0 bottom-0 bg-amber-700 pt-12 pb-12',
+        'fixed top-0 bottom-0 bg-amber-700 pt-12',
+        'sm:pb-12 md:pb-12 lg:pb-0',
         'hidden sm:hidden md:hidden lg:block',
         'z-[var(--z-aside)]',
         'shadow-[6px_4px_10px_#0d131c66]',

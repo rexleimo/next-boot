@@ -10,6 +10,7 @@ import {
 import { MobileMenu } from '@/components';
 import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
+import clsx from 'clsx';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
@@ -24,7 +25,11 @@ function Layout({ children }: { children: React.ReactNode }) {
 
       <AsideNav />
 
-      <Content>
+      <Content
+        className={clsx('sm:pl-0 md:pl-0 lg:pl-12', {
+          '!pl-52': openAside,
+        })}
+      >
         {children}
         <Footer>
           <nav className={'h-12 bg-amber-300'}></nav>
