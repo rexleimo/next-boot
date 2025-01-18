@@ -4,8 +4,6 @@ import { SwiperNPM } from './types';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { SwiperProps as SwiperContainerProps } from 'swiper/react';
 
-import 'swiper/css';
-
 import { Dots } from '@/widget/Swiper/Dots';
 import { AutoplayOptions } from 'swiper/types';
 

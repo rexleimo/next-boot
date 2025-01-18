@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   // output: 'export',
 
-  compress: false,
+  compress: true,
   // 高速CDN缓存时间
   expireTime: imageCacheTimeOut,
 

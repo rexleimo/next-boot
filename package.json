@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "ANALYZE=false next build && node ./scripts/build-paw/index.mjs",
+    "build": "ANALYZE=true next build && node ./scripts/build-paw/index.mjs",
     "build:export": "next build",
     "start": "next start",
     "lint": "next lint",

@@ -11,6 +11,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import '@/styles/main.scss';
+import 'swiper/css';
 import './globals.css';
 
 const geistSans = Geist({
