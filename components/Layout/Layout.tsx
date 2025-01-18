@@ -20,7 +20,9 @@ function Layout({ children }: { children: React.ReactNode }) {
         <nav
           className={'h-12 bg-amber-300'}
           onClick={() => toggleAside(!openAside)}
-        ></nav>
+        >
+          点击打开侧边栏
+        </nav>
       </Header>
 
       <AsideNav />
@@ -32,7 +34,7 @@ function Layout({ children }: { children: React.ReactNode }) {
       >
         {children}
         <Footer>
-          <nav className={'h-12 bg-amber-300'}></nav>
+          <nav className={'h-12 bg-amber-300'}>Footer</nav>
         </Footer>
       </Content>
 

@@ -25,12 +25,6 @@ export default function Home() {
           );
         })}
       </Swiper>
-
-      <CustomImage src={'/2.png'} alt={'2.png'} width={64} height={64} />
-      <Link href={'/ha'}>go to ha</Link>
-      <div>
-        <span className={'icon icon-training'}></span>
-      </div>
     </>
   );
 }
