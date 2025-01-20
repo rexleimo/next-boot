@@ -1,7 +1,6 @@
 import React from 'react';
 
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import { StorageProvider, Layout } from '@/components';
 import Script from 'next/script';
 
@@ -13,16 +12,6 @@ import { routing } from '@/i18n/routing';
 import '@/styles/main.scss';
 import 'swiper/css';
 import './globals.css';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -46,11 +35,13 @@ export const metadata: Metadata = {
   },
 };
 
-export async function generateStaticParams() {
-  return [{ locale: 'en' }];
-}
+// export async function generateStaticParams() {
+//   return [{ locale: 'en' }];
+// }
+//
+// export const dynamic = 'force-static';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 
 type Params = Promise<{ locale: string }>;
 
@@ -75,10 +66,23 @@ export default async function RootLayout({
       <head>
         <meta name="theme-color" content="#000000" />
         <link rel={'stylesheet'} href={'/iconfont/iconfont.css'} />
+        <link
+          href="https://cdn.jsdelivr.net/npm/swiper@11.2.1/swiper-bundle.min.css"
+          rel="stylesheet"
+        />
+        <link
+          href={'https://unpkg.com/nprogress@0.2.0/nprogress.css'}
+          rel={'stylesheet'}
+        />
+        <Script
+          src={
+            'https://cdn.jsdelivr.net/npm/swiper@11.2.1/swiper-bundle.min.js'
+          }
+          defer={true}
+          strategy={'beforeInteractive'}
+        />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
-      >
+      <body className={`antialiased min-h-screen`}>
         <StorageProvider>
           <NextIntlClientProvider messages={messages}>
             <Layout>{children}</Layout>

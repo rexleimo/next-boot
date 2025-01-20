@@ -1,0 +1,21 @@
+$steps: 5;
+
+.progress {
+  .progressFill {
+    width: 0;
+    transform-origin: left;
+    animation: progress 10s linear forwards;
+    background-color: #1e3a8a;
+  }
+
+  @keyframes progress {
+    0% {
+      width: 0;
+    }
+
+    100% {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}
