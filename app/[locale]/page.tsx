@@ -2,7 +2,7 @@ import { use } from 'react';
 import { Swiper, SwiperSlide } from '@/widget';
 
 export default function Home() {
-  const response = use(new Promise(resolve => setTimeout(resolve, 30000)));
+  const response = use(new Promise(resolve => setTimeout(resolve, 3000)));
   console.log(response);
 
   return (
