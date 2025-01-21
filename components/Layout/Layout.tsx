@@ -11,9 +11,13 @@ import { MobileMenu } from '@/components';
 import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
+import {useWebSocket} from "@/hooks";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
+
+  useWebSocket();
+
   return (
     <WebLayout>
       <Header>

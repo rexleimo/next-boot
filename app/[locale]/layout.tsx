@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import type { Metadata, Viewport } from 'next';
 import { StorageProvider, Layout } from '@/components';
@@ -78,8 +78,9 @@ export default async function RootLayout({
           src={
             'https://cdn.jsdelivr.net/npm/swiper@11.2.1/swiper-bundle.min.js'
           }
-          defer={true}
           strategy={'beforeInteractive'}
+          crossOrigin={'anonymous'}
+          defer={true}
         />
       </head>
       <body className={`antialiased min-h-screen`}>

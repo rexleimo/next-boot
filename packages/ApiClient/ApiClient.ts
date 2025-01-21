@@ -1,14 +1,3 @@
-import { headers } from 'next/headers';
-
-async function getAuthToken() {
-  if (typeof window !== 'undefined') {
-    return window.localStorage.getItem('token');
-  } else {
-    const headersList = await headers();
-    return headersList.get('Authorization');
-  }
-}
-
 // 创建API包装函数
 async function withAPI<T>(promise: Promise<Response>): Promise<T> {
   try {
@@ -34,14 +23,15 @@ async function withAPI<T>(promise: Promise<Response>): Promise<T> {
 }
 
 // 添加认证的包装函数
-async function withAuth<T>(promise: Promise<Response>): Promise<T> {
-  // 获取token
-  const token = await getAuthToken();
-
+async function withAuth<T>(
+  promise: Promise<Response>,
+  token?: string
+): Promise<T> {
   // 添加认证头
-  const headers = new Headers({
-    Authorization: `Bearer ${token}`,
-  });
+  const headers = new Headers();
+  if (token) {
+    headers.append('Authorization', `Bearer ${token}`);
+  }
 
   // 修改请求配置
   const newPromise = promise.then(response => {
@@ -58,9 +48,9 @@ async function withAuth<T>(promise: Promise<Response>): Promise<T> {
   return withAPI(newPromise);
 }
 
-function ApiClient() {
+function ApiClient(token?: string) {
   return (promise: Promise<Response>) => {
-    return withAuth(promise);
+    return withAuth(promise, token);
   };
 }
 
