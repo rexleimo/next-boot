@@ -26,17 +26,26 @@ function useWebSocket() {
   const followChannel = new BroadcastChannel(FOLLOWER_CHANNEL);
 
   // 尝试成为主标签页
-  function tryBecomeMaster() {
+  function tryBecomeMaster(attempt = 1) {
     // 先获取当前的主标签页值
     const currentMaster = LocalStorage.getInstance().get(MASTER_KEY);
 
     if (!currentMaster) {
       LocalStorage.getInstance().set(MASTER_KEY, TAB_ID);
-      // 双重检查,确保真的成为了主标签页
-      if (LocalStorage.getInstance().get(MASTER_KEY) === TAB_ID) {
-        LocalStorage.getInstance().set(MASTER_KEY, TAB_ID);
-        startWebSocket();
-      }
+
+      // 等待一段时间以允许其他标签页更新
+      setTimeout(() => {
+        const confirmedMaster = LocalStorage.getInstance().get(MASTER_KEY);
+        if (confirmedMaster === TAB_ID) {
+          startWebSocket();
+        } else {
+          // 其他标签页成为主标签页，记录日志或执行备用逻辑
+          console.log('另一标签页已成为主标签页。');
+        }
+      }, 100 * attempt); // 延迟根据尝试次数增加
+    } else {
+      // 可选：实现监听器或重试逻辑
+      console.log(`主标签页已存在：${currentMaster}`);
     }
   }
 
@@ -44,7 +53,7 @@ function useWebSocket() {
   function startWebSocket() {
     // 创建 WebSocket 实例
     wsRef.current = new WebSocket(
-      'wss://off-api-7akmnzlfu420.kbtest193usgzmfhqoldhnv3719sjapu48amcpmrehal213.com/ws?token=8c6fa9fd-ea98-4ae5-85b9-32036dedd963'
+      'wss://off-api-7akmnzlfu420.kbtest193usgzmfhqoldhnv3719sjapu48amcpmrehal213.com/ws?token=e49812ff-dbc6-4dd8-9ca0-68d10a110573'
     );
 
     wsRef.current.onopen = function () {
@@ -66,9 +75,6 @@ function useWebSocket() {
     };
 
     wsRef.current.onmessage = function (event) {
-      console.log('收到消息:', event.data);
-      masterChannel.postMessage(event.data);
-
       if (event.data === 'pong') {
         clearHeartbeatTimeout();
         heartbeatTimerRef.current = setTimeout(sendHeartbeat, WS_PING_TIME);
@@ -76,6 +82,8 @@ function useWebSocket() {
           console.log('WebSocket 连接已超时');
           wsRef.current?.close();
         }, WS_PING_TIME * 2);
+      } else {
+        masterChannel.postMessage(event.data);
       }
     };
 
@@ -117,7 +125,6 @@ function useWebSocket() {
   useEffect(() => {
     // 监听 storage 事件，检测主标签页的变化
     const handleStorageChange = (event: StorageEvent) => {
-      console.log(event);
       if (event.key === MASTER_KEY) {
         if (!event.newValue) {
           tryBecomeMaster();
@@ -169,14 +176,6 @@ function useWebSocket() {
       messageQueueRef.current.push(message);
     }
   }
-
-  function sendMessage(data: Message) {
-    followChannel.postMessage(data);
-  }
-
-  return {
-    sendMessage,
-  };
 }
 
 export default useWebSocket;

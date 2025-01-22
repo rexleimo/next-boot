@@ -1,18 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { BroadcastChannel } from '@/packages';
 
-function useBroadcastChannel(channelName: string) {
-  const [message, setMessage] = useState();
+interface UseBroadcastChannelOptions<T> {
+  channelName: string;
+  onMessage?: (message: T) => void;
+  errorHandler?: (error: Error) => void;
+}
+
+function useBroadcastChannel({
+  channelName,
+  onMessage,
+}: UseBroadcastChannelOptions<any>) {
+  const broadcastChannel = useRef<BroadcastChannel | null>(null);
 
   useEffect(() => {
-    const broadcastChannel = new BroadcastChannel(channelName);
-    broadcastChannel.onMessage(event => {
-      setMessage(event.data);
+    broadcastChannel.current = new BroadcastChannel(channelName);
+
+    broadcastChannel.current.onMessage(event => {
+      onMessage?.(event.data);
     });
+
+    return () => {
+      broadcastChannel.current?.close();
+    };
   }, []);
 
+  const sendMessage = (message: any) => {
+    broadcastChannel.current?.postMessage(message);
+  };
+
   return {
-    message,
+    sendMessage,
   };
 }
 
