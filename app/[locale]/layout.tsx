@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import type { Metadata, Viewport } from 'next';
-import { StorageProvider, Layout } from '@/components';
+import { StorageProvider, Layout, LoadingScreen } from '@/components';
 import Script from 'next/script';
 
 import { NextIntlClientProvider } from 'next-intl';
@@ -10,7 +10,6 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 
 import '@/styles/main.scss';
-import 'swiper/css';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -74,16 +73,9 @@ export default async function RootLayout({
           href={'https://unpkg.com/nprogress@0.2.0/nprogress.css'}
           rel={'stylesheet'}
         />
-        <Script
-          src={
-            'https://cdn.jsdelivr.net/npm/swiper@11.2.1/swiper-bundle.min.js'
-          }
-          strategy={'beforeInteractive'}
-          crossOrigin={'anonymous'}
-          defer={true}
-        />
       </head>
       <body className={`antialiased min-h-screen`}>
+        <LoadingScreen />
         <StorageProvider>
           <NextIntlClientProvider messages={messages}>
             <Layout>{children}</Layout>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { FOLLOWER_CHANNEL, LocalStorage } from '@/hooks';
 import { BroadcastChannel } from '@/packages';
-import { MASTER_CHANNEL } from './channel';
+import { MASTER_CHANNEL } from '@/hooks';
 
 type Message = string | ArrayBufferLike | Blob | ArrayBufferView;
 
@@ -22,7 +22,7 @@ function useWebSocket() {
 
   // 主标签页的标识键
   const MASTER_KEY = 'websocket_master';
-  const broadcastChannel = new BroadcastChannel(MASTER_CHANNEL);
+  const masterChannel = new BroadcastChannel(MASTER_CHANNEL);
   const followChannel = new BroadcastChannel(FOLLOWER_CHANNEL);
 
   // 尝试成为主标签页
@@ -67,13 +67,15 @@ function useWebSocket() {
 
     wsRef.current.onmessage = function (event) {
       console.log('收到消息:', event.data);
-      broadcastChannel.postMessage(event.data);
+      masterChannel.postMessage(event.data);
 
       if (event.data === 'pong') {
-        if (heartbeatTimeoutRef.current) {
-          clearTimeout(heartbeatTimeoutRef.current);
-        }
+        clearHeartbeatTimeout();
         heartbeatTimerRef.current = setTimeout(sendHeartbeat, WS_PING_TIME);
+        heartbeatTimeoutRef.current = setTimeout(() => {
+          console.log('WebSocket 连接已超时');
+          wsRef.current?.close();
+        }, WS_PING_TIME * 2);
       }
     };
 
@@ -82,23 +84,32 @@ function useWebSocket() {
       // 如果主标签页关闭，尝试重新成为主标签页
       localStorage.removeItem(MASTER_KEY);
       // 清除计时器
-      if (heartbeatTimerRef.current) {
-        clearTimeout(heartbeatTimerRef.current);
-      }
-      if (heartbeatTimeoutRef.current) {
-        clearTimeout(heartbeatTimeoutRef.current);
-      }
+      clearWebsocketTimeOut();
       tryBecomeMaster();
     };
+  }
+
+  // 清楚操作
+  function clearWebsocketTimeOut() {
+    clearHeartbeatTimer();
+    clearHeartbeatTimeout();
+  }
+
+  function clearHeartbeatTimer() {
+    if (heartbeatTimerRef.current) {
+      clearTimeout(heartbeatTimerRef.current);
+    }
+  }
+
+  function clearHeartbeatTimeout() {
+    if (heartbeatTimeoutRef.current) {
+      clearTimeout(heartbeatTimeoutRef.current);
+    }
   }
 
   // 发送心跳
   function sendHeartbeat() {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-      heartbeatTimeoutRef.current = setTimeout(() => {
-        console.log('WebSocket 连接已超时');
-        wsRef.current?.close();
-      }, WS_PING_TIME * 2);
       wsRef.current.send('ping');
     }
   }
@@ -138,8 +149,7 @@ function useWebSocket() {
       }
 
       LocalStorage.getInstance().remove(MASTER_KEY);
-      clearTimeout(heartbeatTimerRef.current!);
-      clearTimeout(heartbeatTimeoutRef.current!);
+      clearWebsocketTimeOut();
     };
   }, []);
 

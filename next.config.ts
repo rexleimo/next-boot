@@ -32,7 +32,7 @@ const nextConfig: NextConfig = {
     if (!isServer) {
       config.externals = {
         ...config.externals,
-        swiper: 'Swiper',
+        // swiper: 'Swiper',
       };
     }
     return config;

@@ -1,8 +1,10 @@
 import { use } from 'react';
+
 import { Swiper, SwiperSlide } from '@/widget';
+import { Link } from '@/i18n/routing';
 
 export default function Home() {
-  const response = use(new Promise(resolve => setTimeout(resolve, 200)));
+  const response = use(new Promise(resolve => setTimeout(resolve, 1000)));
   console.log(response);
 
   return (
@@ -22,6 +24,8 @@ export default function Home() {
           );
         })}
       </Swiper>
+
+      <Link href={'/ha'}>Go to Ha</Link>
     </>
   );
 }
