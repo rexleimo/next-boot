@@ -12,6 +12,7 @@ import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
 import { useWebSocket } from '@/hooks';
+import { useEffect } from 'react';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
@@ -20,6 +21,10 @@ function Layout({ children }: { children: React.ReactNode }) {
     wss: 'ws://localhost:3000/ws',
     scenes: 'chat',
   });
+
+  useEffect(() => {
+    tryBecomeMaster();
+  }, []);
 
   return (
     <WebLayout>

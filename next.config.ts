@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
   // 高速CDN缓存时间
   expireTime: imageCacheTimeOut,
 
+  experimental: {
+    optimizePackageImports: ['react', 'react-dom', 'swiper', 'framer-motion'],
+  },
+
   httpAgentOptions: {
     keepAlive: false,
   },
@@ -32,7 +36,6 @@ const nextConfig: NextConfig = {
     if (!isServer) {
       config.externals = {
         ...config.externals,
-        // swiper: 'Swiper',
       };
     }
     return config;
