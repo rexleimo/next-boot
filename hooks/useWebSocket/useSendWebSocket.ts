@@ -1,13 +1,17 @@
 import { FOLLOWER_CHANNEL, MASTER_CHANNEL, useBroadcastChannel } from '@/hooks';
-import { useEffect } from 'react';
 
-function useSendWebSocket({ onMessage }: { onMessage: (event: any) => void }) {
+interface SendWebSocketOptions {
+  scenes: string;
+  onMessage: (event: any) => void;
+}
+
+function useSendWebSocket({ scenes, onMessage }: SendWebSocketOptions) {
   const { sendMessage } = useBroadcastChannel({
-    channelName: FOLLOWER_CHANNEL,
+    channelName: `${scenes}_${FOLLOWER_CHANNEL}`,
   });
 
   useBroadcastChannel({
-    channelName: MASTER_CHANNEL,
+    channelName: `${scenes}_${MASTER_CHANNEL}`,
     onMessage,
   });
 

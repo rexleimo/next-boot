@@ -9,9 +9,16 @@ type Message = string | ArrayBufferLike | Blob | ArrayBufferView;
 
 const WS_PING_TIME = 5 * 1000;
 
-function useWebSocket() {
+type WebSocketOptions = {
+  wss: string;
+  scenes: string;
+};
+
+function useWebSocket(options: WebSocketOptions) {
+  const { wss, scenes } = options;
+
   const TAB_ID = useRef(Date.now()).current;
-  console.log('TAB_ID', TAB_ID);
+  console.log('Client Tab ID:', TAB_ID);
   const wsRef = useRef<WebSocket | null>(null);
   // 心跳计时器Ref
   const heartbeatTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -21,9 +28,9 @@ function useWebSocket() {
   const messageQueueRef = useRef<Message[]>([]);
 
   // 主标签页的标识键
-  const MASTER_KEY = 'websocket_master';
-  const masterChannel = new BroadcastChannel(MASTER_CHANNEL);
-  const followChannel = new BroadcastChannel(FOLLOWER_CHANNEL);
+  const MASTER_KEY = `WEBSOCKET_CLIENT_${scenes.toUpperCase()}`;
+  const masterChannel = new BroadcastChannel(`${screen}_${MASTER_CHANNEL}`);
+  const followChannel = new BroadcastChannel(`${screen}_${FOLLOWER_CHANNEL}`);
 
   // 尝试成为主标签页
   function tryBecomeMaster(attempt = 1) {
@@ -52,9 +59,7 @@ function useWebSocket() {
   // 启动 WebSocket 连接
   function startWebSocket() {
     // 创建 WebSocket 实例
-    wsRef.current = new WebSocket(
-      'wss://off-api-7akmnzlfu420.kbtest193usgzmfhqoldhnv3719sjapu48amcpmrehal213.com/ws?token=e49812ff-dbc6-4dd8-9ca0-68d10a110573'
-    );
+    wsRef.current = new WebSocket(wss);
 
     wsRef.current.onopen = function () {
       console.log('WebSocket 已连接');
@@ -144,8 +149,6 @@ function useWebSocket() {
     // 在页面卸载时，释放主标签页的标识
     window.addEventListener('beforeunload', handleBeforeUnload);
 
-    tryBecomeMaster();
-
     return () => {
       window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -176,6 +179,10 @@ function useWebSocket() {
       messageQueueRef.current.push(message);
     }
   }
+
+  return {
+    tryBecomeMaster,
+  };
 }
 
 export default useWebSocket;
