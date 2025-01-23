@@ -2,9 +2,13 @@
 
 import { useState } from 'react';
 import { useSendWebSocket } from '@/hooks';
+import { useIDB } from '@/atoms';
 
 function Chat() {
   const [message, setMessage] = useState('');
+  const { useUsers } = useIDB();
+  const { add } = useUsers();
+
   const { sendMessage } = useSendWebSocket({
     scenes: 'chat',
     onMessage: event => {
@@ -29,6 +33,9 @@ function Chat() {
           temp_id: '',
         },
       ])
+    );
+    add({ id: 1, name: 'John', email: 'john@example.com' }).catch(err =>
+      console.error(err)
     );
   };
 

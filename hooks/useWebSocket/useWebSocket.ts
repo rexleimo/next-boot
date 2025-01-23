@@ -29,8 +29,8 @@ function useWebSocket(options: WebSocketOptions) {
 
   // 主标签页的标识键
   const MASTER_KEY = `WEBSOCKET_CLIENT_${scenes.toUpperCase()}`;
-  const masterChannel = new BroadcastChannel(`${screen}_${MASTER_CHANNEL}`);
-  const followChannel = new BroadcastChannel(`${screen}_${FOLLOWER_CHANNEL}`);
+  const masterChannel = new BroadcastChannel(`${scenes}_${MASTER_CHANNEL}`);
+  const followChannel = new BroadcastChannel(`${scenes}_${FOLLOWER_CHANNEL}`);
 
   // 尝试成为主标签页
   function tryBecomeMaster(attempt = 1) {
