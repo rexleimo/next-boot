@@ -16,7 +16,10 @@ import { useWebSocket } from '@/hooks';
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
 
-  useWebSocket();
+  const { tryBecomeMaster } = useWebSocket({
+    wss: 'ws://localhost:3000/ws',
+    scenes: 'chat',
+  });
 
   return (
     <WebLayout>

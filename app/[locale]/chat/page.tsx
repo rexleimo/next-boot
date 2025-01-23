@@ -6,6 +6,7 @@ import { useSendWebSocket } from '@/hooks';
 function Chat() {
   const [message, setMessage] = useState('');
   const { sendMessage } = useSendWebSocket({
+    scenes: 'chat',
     onMessage: event => {
       console.log('useSendWebSocket: ', event);
     },
