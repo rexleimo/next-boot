@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useSendWebSocket } from '@/hooks';
+import { useSendWebSocket, useWebWorker } from '@/hooks';
 import { useIDB } from '@/atoms';
+
+import webWorkers from '@/configs/worker';
 
 function Chat() {
   const [message, setMessage] = useState('');
@@ -15,6 +17,8 @@ function Chat() {
       console.log('useSendWebSocket: ', event);
     },
   });
+
+  const { execute, data, error } = useWebWorker(webWorkers.baseWorker);
 
   const onMessage = () => {
     sendMessage(
@@ -39,6 +43,19 @@ function Chat() {
     );
   };
 
+  const handleClick = () => {
+    execute({
+      type: 'test',
+      payload: '你好',
+    })
+      .then(data => {
+        console.log('webWorker postMessage', data);
+      })
+      .catch(error => {
+        console.log('webWorker error', error);
+      });
+  };
+
   return (
     <div>
       <input
@@ -48,6 +65,7 @@ function Chat() {
         }}
       />
       <div onClick={() => onMessage()}>发送</div>
+      <div onClick={() => handleClick()}>Test Web WebWorker PostMessage</div>
     </div>
   );
 }
