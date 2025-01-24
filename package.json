@@ -14,7 +14,9 @@
     "webfonts:build": "node ./scripts/webfonts/index.mjs",
     "test": "jest",
     "test:watch": "jest --watch",
-    "postinstall": "yarn api:build && webfonts:build"
+    "postinstall": "yarn api:build && webfonts:build",
+    "build:worker": "tsc -p tsconfig.worker.json",
+    "watch:worker": "tsc -p tsconfig.worker.json --watch"
   },
   "dependencies": {
     "@capacitor/cli": "^6.2.0",

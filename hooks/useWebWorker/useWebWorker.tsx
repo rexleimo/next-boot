@@ -11,7 +11,7 @@ type WorkerOptions<T, R> = {
 };
 
 function useWebWorker<T = unknown, R = unknown>(
-  worker: Worker,
+  workerScript: string,
   options?: WorkerOptions<T, R>
 ) {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +21,7 @@ function useWebWorker<T = unknown, R = unknown>(
   const taskQueueRef = useRef<TaskQueue[]>([]);
 
   useEffect(() => {
+    const worker = new Worker(workerScript);
     workerRef.current = worker;
 
     worker.onmessage = (event: MessageEvent<WorkerResponse>) => {

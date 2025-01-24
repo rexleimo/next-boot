@@ -1,10 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSendWebSocket, useWebWorker } from '@/hooks';
 import { useIDB } from '@/atoms';
-
-import webWorkers from '@/configs/worker';
 
 function Chat() {
   const [message, setMessage] = useState('');
@@ -18,7 +16,7 @@ function Chat() {
     },
   });
 
-  const { execute, data, error } = useWebWorker(webWorkers.baseWorker);
+  const { execute, data, error } = useWebWorker('/workers/a.worker.js');
 
   const onMessage = () => {
     sendMessage(
@@ -55,6 +53,10 @@ function Chat() {
         console.log('webWorker error', error);
       });
   };
+
+  useEffect(() => {
+    console.log('webWorker data', data);
+  }, [data]);
 
   return (
     <div>
