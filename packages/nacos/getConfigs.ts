@@ -9,4 +9,29 @@ async function getConfigs(dataId: string, group: string) {
   }
 }
 
+function subscribeConfig(
+  dataId: string,
+  group: string,
+  callback: (content: string) => void
+) {
+  configClient.subscribe(
+    {
+      dataId: dataId,
+      group: group,
+    },
+    callback
+  );
+}
+
+function unsubscribeConfig(dataId: string, group: string) {
+  configClient.unsubscribe(
+    {
+      dataId: dataId,
+      group: group,
+    },
+    () => {}
+  );
+}
+
 export default getConfigs;
+export { subscribeConfig, unsubscribeConfig };

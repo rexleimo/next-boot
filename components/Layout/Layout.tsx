@@ -11,20 +11,13 @@ import { MobileMenu } from '@/components';
 import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
-import { useWebSocket } from '@/hooks';
-import { useEffect } from 'react';
+import { useNacosConfig } from '@/packages/nacos/react';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
 
-  const { tryBecomeMaster } = useWebSocket({
-    wss: 'ws://localhost:3000/ws',
-    scenes: 'chat',
-  });
-
-  useEffect(() => {
-    tryBecomeMaster();
-  }, []);
+  const config = useNacosConfig();
+  console.log(config);
 
   return (
     <WebLayout>
