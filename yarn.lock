@@ -3101,6 +3101,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/sharedworker@npm:^0.0.147":
+  version: 0.0.147
+  resolution: "@types/sharedworker@npm:0.0.147"
+  checksum: 10c0/2d1f0e47389acba0fe09c224312a6b4bc8ed0b686f8b3236736210c6c018575ca01c8c7590a1f48e0a84ff74719a0d8b5acbf7e21e81ef846b740cdbfc1267d7
+  languageName: node
+  linkType: hard
+
 "@types/slice-ansi@npm:^4.0.0":
   version: 4.0.0
   resolution: "@types/slice-ansi@npm:4.0.0"
@@ -8663,6 +8670,7 @@ __metadata:
     "@types/ramda": "npm:^0"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
+    "@types/sharedworker": "npm:^0.0.147"
     "@types/vusion__webfonts-generator": "npm:^0"
     "@vusion/webfonts-generator": "npm:^0.8.0"
     clsx: "npm:^2.1.1"

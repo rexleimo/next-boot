@@ -21,25 +21,15 @@ export async function GET() {
 
     const stream = new ReadableStream({
       async start(controller) {
-        // 检查 controller 状态的函数
-        const isControllerActive = () => {
-          return controller.desiredSize !== null && !stream.locked;
-        };
 
-        // 添加定期发送心跳保持连接
-        const heartbeatInterval = setInterval(() => {
-          if (!isControllerActive()) {
-            clearInterval(heartbeatInterval);
-            cleanup();
-            return;
-          }
-          safeSend(`data: ping\n\n`);
-        }, 30000);
+
 
         // 安全地发送数据的函数
         const safeSend = (data: any) => {
-          if (isConnected && isControllerActive()) {
+
+          if (isConnected) {
             try {
+              console.log('safeSend', data);
               controller.enqueue(data);
             } catch (error) {
               console.error('发送数据失败:', error);
@@ -47,6 +37,11 @@ export async function GET() {
             }
           }
         };
+
+        // 添加定期发送心跳保持连接
+        const heartbeatInterval = setInterval(() => {
+          safeSend(`data: ping\n\n`);
+        }, 30000);
 
         // 当全局配置有更新时，通过 SSE 推送给当前客户端
         const onConfigUpdate = (content: any) => {
@@ -62,10 +57,6 @@ export async function GET() {
 
         // 注册全局配置更新事件
         configUpdateEmitter.on('configUpdate', onConfigUpdate);
-
-        stream.cancel().catch(() => {
-          cleanup();
-        });
 
         // 清除订阅
         return cleanup;
