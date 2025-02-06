@@ -2,12 +2,15 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useSendWebSocket, useWebWorker } from '@/hooks';
-import { useIDB } from '@/atoms';
+import {useIDB, useSysConfig} from '@/atoms';
 
 function Chat() {
   const [message, setMessage] = useState('');
   const { useUsers } = useIDB();
   const { add } = useUsers();
+
+  const sysConfig = useSysConfig();
+  console.log(sysConfig);
 
   const { sendMessage } = useSendWebSocket({
     scenes: 'chat',
