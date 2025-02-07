@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useSendWebSocket, useWebWorker } from '@/hooks';
-import {useIDB, useSysConfig} from '@/atoms';
+import { useIDB, useSysConfig } from '@/atoms';
 
 function Chat() {
   const [message, setMessage] = useState('');
@@ -19,7 +19,7 @@ function Chat() {
     },
   });
 
-  const { execute, data, error } = useWebWorker('/workers/a.worker.js');
+  const { execute, data } = useWebWorker('/workers/a.worker.js');
 
   const onMessage = () => {
     sendMessage(
