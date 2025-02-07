@@ -15,7 +15,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "postinstall": "yarn api:build && webfonts:build && yarn husky:init",
-    "husky:init": "husky init",
+    "husky:init": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
     "build:worker": "tsc -p tsconfig.worker.json",
     "watch:worker": "tsc -p tsconfig.worker.json --watch",
     "prepare": "husky"
