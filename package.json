@@ -14,8 +14,7 @@
     "webfonts:build": "node ./scripts/webfonts/index.mjs",
     "test": "jest",
     "test:watch": "jest --watch",
-    "postinstall": "yarn api:build && webfonts:build && yarn husky:init",
-    "husky:init": "husky install && husky set .husky/pre-commit \"npx lint-staged\"",
+    "postinstall": "yarn api:build && webfonts:build && husky init",
     "build:worker": "tsc -p tsconfig.worker.json",
     "watch:worker": "tsc -p tsconfig.worker.json --watch",
     "prepare": "husky"
@@ -73,18 +72,12 @@
     "tailwindcss-safe-area": "^0.6.0",
     "typescript": "^5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
       "prettier --write"
     ],
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
-    ]
+    "*.{css,scss}": "prettier --write"
   },
   "packageManager": "yarn@4.6.0+sha512.5383cc12567a95f1d668fbe762dfe0075c595b4bfff433be478dbbe24e05251a8e8c3eb992a986667c1d53b6c3a9c85b8398c35a960587fbd9fa3a0915406728"
 }
