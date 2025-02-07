@@ -9,7 +9,6 @@ function useNacosConfig() {
   useEffect(() => {
     return eventSourceManager.subscribe(setConfig);
   }, []);
-
   return config;
 }
 
