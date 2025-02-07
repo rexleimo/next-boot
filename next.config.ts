@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ['react', 'react-dom', 'swiper', 'framer-motion'],
+    optimizeCss: true,
   },
 
   httpAgentOptions: {
