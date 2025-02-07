@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSendWebSocket, useWebWorker } from '@/hooks';
 import { useIDB, useSysConfig } from '@/atoms';
 
