@@ -11,12 +11,14 @@ import { MobileMenu } from '@/components';
 import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
+import { NetworkStatusAdvanced } from '@/packages/NetworkAdvanced';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside, toggleAside } = useLayoutState();
 
   return (
     <WebLayout>
+      <NetworkStatusAdvanced />
       <Header>
         <nav
           className={'h-12 bg-amber-300'}
