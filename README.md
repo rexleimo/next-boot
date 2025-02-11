@@ -32,6 +32,8 @@
 
 ## 文档概览
 
+完整的文档：https://www.yuque.com/shamengshou/pfyzrz?# 《GlobeGame全球站开发文档》
+
 项目文档位于 `docs/` 文件夹中，包含以下内容：
 
 ### 1. [API 自动化生成](docs/Api%20自动化生成.md)
