@@ -2,6 +2,7 @@ import {
   HTMLAttributes,
   memo,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -49,25 +50,31 @@ function Menu(props: MenuProps) {
   }, [open, isExpanded, onMenuIconMouseEnter, onMenuIconMouseLeave]);
 
   const motionProps = useMemo(() => {
-    if (isExpanded) {
-      return {
-        initial: { maxHeight: 0 },
-        animate: { maxHeight: window.innerHeight },
-        transition: { duration: 0.375 },
-      };
-    } else {
-      const top = selfRef.current?.getBoundingClientRect().top;
-      return {
-        initial: { width: 0 },
-        animate: { width: 200 },
-        style: {
-          position: 'fixed',
-          top: top,
-          left: '3.5rem',
-          background: 'red',
-        } as MotionStyle,
-      };
+    if (open) {
+      if (isExpanded) {
+        return {
+          initial: { maxHeight: 0 },
+          animate: { maxHeight: window.innerHeight },
+          transition: { duration: 0.375 },
+        };
+      } else {
+        const top = selfRef.current?.offsetTop || 0;
+        return {
+          initial: { width: 0 },
+          animate: { width: 200 },
+          style: {
+            position: 'fixed',
+            top: top,
+            left: '3.5rem',
+            background: 'red',
+          } as MotionStyle,
+        };
+      }
     }
+  }, [isExpanded, open]);
+
+  useEffect(() => {
+    setOpen(false);
   }, [isExpanded]);
 
   return (
