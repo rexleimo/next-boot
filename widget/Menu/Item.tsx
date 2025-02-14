@@ -1,7 +1,9 @@
-import { memo } from 'react';
+import { memo, useContext } from 'react';
 import clsx from 'clsx';
+import { MenuContext } from '@/widget/Menu/context';
 
 function Item() {
+  const { isExpanded } = useContext(MenuContext);
   return (
     <a
       className={clsx(
@@ -28,13 +30,15 @@ function Item() {
       )}
     >
       <div className={'font-medium h-5 mr-3 relative'}></div>
-      <div
-        className={
-          'flex flex-col text-sm text-ellipsis line-clamp-2 max-w-[calc(100% - 10px)]'
-        }
-      >
-        BetFury 原创
-      </div>
+      {isExpanded && (
+        <div
+          className={
+            'flex flex-col text-sm text-ellipsis line-clamp-2 max-w-[calc(100% - 10px)]'
+          }
+        >
+          BetFury 原创
+        </div>
+      )}
     </a>
   );
 }

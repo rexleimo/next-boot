@@ -73,6 +73,12 @@ export default async function RootLayout({
           href={'https://unpkg.com/nprogress@0.2.0/nprogress.css'}
           rel={'stylesheet'}
         />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/simplebar-react@3.3.0/dist/simplebar.min.css"
+          integrity="sha256-plFwFf/3EkfLQVO1lfLsgE+e95PitSEiMV9kjUEE+kg="
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={`antialiased min-h-screen`}>
         <LoadingScreen />

@@ -8789,6 +8789,7 @@ __metadata:
     react: "npm:^19.0.0"
     react-dom: "npm:^19.0.0"
     sass: "npm:^1.83.1"
+    simplebar-react: "npm:^3.3.0"
     swagger-typescript-api: "npm:^13.0.23"
     swiper: "npm:^11.2.1"
     tailwindcss: "npm:^3.4.1"
@@ -10967,6 +10968,26 @@ __metadata:
   dependencies:
     is-arrayish: "npm:^0.3.1"
   checksum: 10c0/df5e4662a8c750bdba69af4e8263c5d96fe4cd0f9fe4bdfa3cbdeb45d2e869dff640beaaeb1ef0e99db4d8d2ec92f85508c269f50c972174851bc1ae5bd64308
+  languageName: node
+  linkType: hard
+
+"simplebar-core@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "simplebar-core@npm:1.3.0"
+  dependencies:
+    lodash: "npm:^4.17.21"
+  checksum: 10c0/c8aa86a402e9a13ffb7a65d75851d400345f109f092f8c23c546bd3e451a7c63d84784fc3bb1c15283cd05ece2ccddd28025f42db0b50aa00db385d8afa7f5e6
+  languageName: node
+  linkType: hard
+
+"simplebar-react@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "simplebar-react@npm:3.3.0"
+  dependencies:
+    simplebar-core: "npm:^1.3.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10c0/ad07ac2b239f7372af48f92ad01b82a7e6465fcd1c43da9f5d12edb26cba81a55c87badd2cffac4aa8aa769da56c05b4e2eb5de19fec52588ca57f87d1f6202b
   languageName: node
   linkType: hard
 
