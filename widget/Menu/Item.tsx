@@ -1,8 +1,15 @@
-import { memo, useContext } from 'react';
+import { memo, ReactElement, ReactNode, useContext } from 'react';
 import clsx from 'clsx';
 import { MenuContext } from '@/widget/Menu/context';
 
-function Item() {
+type ItemProps = {
+  label?: string | ReactNode | ReactElement;
+  children?: ReactNode | ReactElement;
+};
+
+function Item(props: ItemProps) {
+  const { label, children } = props;
+
   const { open, isExpanded } = useContext(MenuContext);
   return (
     <a
@@ -33,11 +40,13 @@ function Item() {
       {(open || isExpanded) && (
         <div
           className={clsx(
+            'w-full',
             'flex flex-col text-sm text-ellipsis line-clamp-2 max-w-[calc(100% - 10px)]',
             'hover:text-blue-100'
           )}
         >
-          BetFury 原创
+          {label}
+          {children}
         </div>
       )}
     </a>

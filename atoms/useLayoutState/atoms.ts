@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
 
-const openAside = atom<boolean>(false);
+const openAside = atom<boolean>(true);
 
 export { openAside };
