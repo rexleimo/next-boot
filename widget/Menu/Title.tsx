@@ -1,6 +1,7 @@
 import { memo, ReactNode, ReactElement, useContext } from 'react';
 import Label, { LabelProps } from '@/widget/Menu/Title/Label';
 import { MenuContext } from '@/widget/Menu/context';
+import clsx from 'clsx';
 
 export type TitleProps = {
   label: string | ReactNode | ReactElement;
@@ -9,15 +10,25 @@ export type TitleProps = {
 
 function Title(props: TitleProps) {
   const { label, icon } = props;
-  const { isExpanded } = useContext(MenuContext);
+  const { open, isExpanded } = useContext(MenuContext);
+
   return (
     <div
-      className={
-        'flex text-[inherit] h-11 rounded hover:bg-white items-center px-1'
-      }
+      className={clsx(
+        'flex text-[inherit] h-11 rounded hover:bg-white items-center px-1',
+        {
+          'bg-white': open && !isExpanded,
+        }
+      )}
     >
       <div className={'flex gap-3 items-center flex-auto'}>
-        <div className={'flex items-center justify-center'}>{icon}</div>
+        <div
+          className={
+            'flex items-center justify-center text-white group-hover:text-black'
+          }
+        >
+          {icon}
+        </div>
         {isExpanded && <div className={'flex-auto'}>{label}</div>}
       </div>
       {isExpanded && <Label />}

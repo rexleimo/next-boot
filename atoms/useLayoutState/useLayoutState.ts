@@ -5,9 +5,12 @@ import { useCallback } from 'react';
 function useLayoutState() {
   const [openAside, setOpenAside] = useAtom(openAsideAtom);
 
-  const toggleAside = useCallback((state: boolean) => {
-    setOpenAside(state);
-  }, []);
+  const toggleAside = useCallback(
+    (state: boolean) => {
+      setOpenAside(state);
+    },
+    [setOpenAside]
+  );
 
   return {
     openAside,

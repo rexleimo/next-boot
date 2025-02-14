@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { MenuContext } from '@/widget/Menu/context';
 
 function Item() {
-  const { isExpanded } = useContext(MenuContext);
+  const { open, isExpanded } = useContext(MenuContext);
   return (
     <a
       className={clsx(
@@ -30,11 +30,12 @@ function Item() {
       )}
     >
       <div className={'font-medium h-5 mr-3 relative'}></div>
-      {isExpanded && (
+      {(open || isExpanded) && (
         <div
-          className={
-            'flex flex-col text-sm text-ellipsis line-clamp-2 max-w-[calc(100% - 10px)]'
-          }
+          className={clsx(
+            'flex flex-col text-sm text-ellipsis line-clamp-2 max-w-[calc(100% - 10px)]',
+            'hover:text-blue-100'
+          )}
         >
           BetFury 原创
         </div>
