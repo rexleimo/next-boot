@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react';
 import { CustomImage } from '@/components/CustomImage';
 import clsx from 'clsx';
 import { ImageCardProps } from '@/components/ImageCard/types';
+import { Link } from '@/i18n/routing';
 
 function isRemoteAddress(addressString: string) {
   return (
@@ -45,18 +46,24 @@ function ImageCard(props: ImageCardProps) {
   }, [src]);
 
   return (
-    <div className={'w-full'}>
+    <div className={'w-full cursor-pointer group'}>
       <div className={'relative mb-2 w-full'}>
-        <CustomImage
-          width={width}
-          height={height}
-          {...srcProps}
-          className={'rounded-2xl'}
-          alt={''}
-        />
+        <div className={'overflow-hidden rounded-xl'}>
+          <Link href={''}>
+            <CustomImage
+              width={width}
+              height={height}
+              className={
+                'group-hover:scale-105 transform-gpu ease-in-out duration-300'
+              }
+              {...srcProps}
+              alt={''}
+            />
+          </Link>
+        </div>
         <div
           className={clsx(
-            'absolute right-0 bottom-4 rounded-l-2xl',
+            'absolute right-0 bottom-4 rounded-l-xl',
             'bg-blue-700 text-white',
             'px-10 py-1'
           )}
@@ -66,7 +73,7 @@ function ImageCard(props: ImageCardProps) {
       </div>
       {/*Info*/}
       <div className={'text-sm text-ellipsis text-nowrap overflow-hidden'}>
-        {name}
+        <Link href={''}>{name}</Link>
       </div>
     </div>
   );
