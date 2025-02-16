@@ -12,19 +12,17 @@ import { AsideNav } from '@/components/Layout/AsideNav';
 import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
 import { NetworkStatusAdvanced } from '@/packages/NetworkAdvanced';
+import { Logo } from '@/components/Layout/Header';
 
 function Layout({ children }: { children: React.ReactNode }) {
-  const { openAside, toggleAside } = useLayoutState();
+  const { openAside } = useLayoutState();
 
   return (
     <WebLayout>
       <NetworkStatusAdvanced />
       <Header>
-        <nav
-          className={'h-12 bg-amber-300'}
-          onClick={() => toggleAside(!openAside)}
-        >
-          点击打开侧边栏
+        <nav className={'h-12 shadow bg-white'}>
+          <Logo />
         </nav>
       </Header>
 
@@ -35,14 +33,16 @@ function Layout({ children }: { children: React.ReactNode }) {
           '!pl-52': openAside,
         })}
       >
-        {children}
-        <Footer>
-          <nav className={'h-12 bg-amber-300'}>Footer</nav>
+        <div className={'container mx-auto'}>{children}</div>
+        <Footer className={'bg-amber-300'}>
+          <div className={'container mx-auto'}>
+            <nav className={'h-12'}>Footer</nav>
+          </div>
         </Footer>
       </Content>
 
       <MobileMenu />
-      <MaskLayout open={openAside} />
+      <MaskLayout open={false} />
     </WebLayout>
   );
 }

@@ -17,7 +17,7 @@ export type MenuProps = HTMLAttributes<HTMLDivElement> & {
 } & TitleProps;
 
 function Menu(props: MenuProps) {
-  const { children, isExpanded, label, icon } = props;
+  const { children, isExpanded, label, icon, className } = props;
   const [open, setOpen] = useState(false);
   const selfRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -81,7 +81,7 @@ function Menu(props: MenuProps) {
     <MenuProvider value={value}>
       <div
         ref={selfRef}
-        className={'cursor-pointer group'}
+        className={clsx('cursor-pointer group', className)}
         onMouseEnter={onMenuIconMouseEnter}
         onMouseLeave={onMenuIconMouseLeave}
       >

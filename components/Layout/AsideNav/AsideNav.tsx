@@ -38,7 +38,6 @@ function AsideNav() {
       ref={asideRef}
       className={clsx(
         'fixed top-0 bottom-0 bg-amber-700 pt-12',
-
         'sm:pb-12 md:pb-12 lg:pb-0',
         'hidden sm:hidden md:hidden lg:block',
         'z-[var(--z-aside)]',
@@ -50,11 +49,16 @@ function AsideNav() {
       )}
     >
       <SimplebarReact
-        className={clsx('pl-3 pr-3')}
+        className={clsx('pl-3 pr-3 pt-2')}
         style={{ maxHeight: height }}
       >
         {Array.from({ length: 10 }).map((_, i) => (
-          <Menu key={i} label={'text'} isExpanded={openAside}>
+          <Menu
+            className={'mb-2'}
+            key={i}
+            label={'text'}
+            isExpanded={openAside}
+          >
             {Array.from({ length: 10 }).map((_, index) => (
               <MenuItem key={index}>哈哈</MenuItem>
             ))}

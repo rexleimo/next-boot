@@ -1,7 +1,7 @@
 import { use } from 'react';
 
 import { Swiper, SwiperSlide } from '@/widget';
-import { Link } from '@/i18n/routing';
+import clsx from 'clsx';
 
 export default function Home() {
   const response = use(new Promise(resolve => setTimeout(resolve, 1000)));
@@ -25,7 +25,21 @@ export default function Home() {
         })}
       </Swiper>
 
-      <Link href={'/ha'}>Go to Ha</Link>
+      <div
+        className={clsx(
+          'my-3',
+          'grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6',
+          'gap-3'
+        )}
+      >
+        {Array.from({ length: 10 }).map(() => {
+          return (
+            <div key={''} className={'h-40 bg-amber-200'}>
+              GGGG
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 }
