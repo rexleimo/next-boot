@@ -37,7 +37,7 @@ function Layout({ children }: { children: React.ReactNode }) {
         <SimpleBar style={{ maxHeight: 'calc(100vh - 3rem)' }}>
           <div className={'container mx-auto'}>{children}</div>
 
-          <Footer className={'bg-amber-300'}>
+          <Footer className={''}>
             <div className={'container mx-auto'}>
               <nav className={'h-12'}>Footer</nav>
             </div>
