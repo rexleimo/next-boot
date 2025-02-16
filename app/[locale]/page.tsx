@@ -2,6 +2,7 @@ import { use } from 'react';
 
 import { Swiper, SwiperSlide } from '@/widget';
 import clsx from 'clsx';
+import { ImageCard } from '@/components/ImageCard';
 
 export default function Home() {
   const response = use(new Promise(resolve => setTimeout(resolve, 1000)));
@@ -34,9 +35,14 @@ export default function Home() {
       >
         {Array.from({ length: 10 }).map(() => {
           return (
-            <div key={''} className={'h-40 bg-amber-200'}>
-              GGGG
-            </div>
+            <ImageCard
+              key={''}
+              src={'https://picsum.photos/200/300'}
+              height={1920}
+              width={1080}
+              count={9}
+              name={'哈哈哈哈哈哈'}
+            />
           );
         })}
       </div>

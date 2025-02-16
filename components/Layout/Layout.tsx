@@ -13,6 +13,7 @@ import { useLayoutState } from '@/atoms';
 import clsx from 'clsx';
 import { NetworkStatusAdvanced } from '@/packages/NetworkAdvanced';
 import { Logo } from '@/components/Layout/Header';
+import SimpleBar from 'simplebar-react';
 
 function Layout({ children }: { children: React.ReactNode }) {
   const { openAside } = useLayoutState();
@@ -33,12 +34,15 @@ function Layout({ children }: { children: React.ReactNode }) {
           '!pl-52': openAside,
         })}
       >
-        <div className={'container mx-auto'}>{children}</div>
-        <Footer className={'bg-amber-300'}>
-          <div className={'container mx-auto'}>
-            <nav className={'h-12'}>Footer</nav>
-          </div>
-        </Footer>
+        <SimpleBar style={{ maxHeight: 'calc(100vh - 3rem)' }}>
+          <div className={'container mx-auto'}>{children}</div>
+
+          <Footer className={'bg-amber-300'}>
+            <div className={'container mx-auto'}>
+              <nav className={'h-12'}>Footer</nav>
+            </div>
+          </Footer>
+        </SimpleBar>
       </Content>
 
       <MobileMenu />
